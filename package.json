@@ -16,5 +16,8 @@
   "bugs": {
     "url": "https://github.com/pullman14/url-shortener/issues"
   },
-  "homepage": "https://github.com/pullman14/url-shortener#readme"
+  "homepage": "https://github.com/pullman14/url-shortener#readme",
+  "dependencies": {
+    "express": "^4.15.4"
+  }
 }
