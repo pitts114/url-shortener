@@ -14,9 +14,14 @@ app.get("/api", (req, res) => {
   res.end()
 })
 
-app.post("/api/", (req, res) =>{
-  console.log(req.body)
-
+app.post("/api", (req, res) =>{
+  console.log(req.body.url_field)
+  if (isValidURL){
+    res.send({
+      original_url:req.body.url_field,
+      short_url:"http://this-site.heroku.com/" + 1847  //dummy short url
+    })
+  }
 })
 
 
@@ -27,5 +32,8 @@ app.listen(app.get("port"), function (){
 
 
 function isValidURL (str) {
+  if (str.match(urlRegex))
+    return true
+  return false
 }
 //
