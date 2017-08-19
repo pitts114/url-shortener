@@ -6,7 +6,7 @@ var mongo = require("mongodb")
 var mongo_uri = process.env.MONGODB_URI //ENV['MONGODB_URI']
 var urlRegex = /^(http:\/\/www\.|https:\/\/www\.|http:\/\/|https:\/\/)?[a-z0-9]+([\-\.]{1}[a-z0-9]+)*\.[a-z]{2,5}(:[0-9]{1,5})?(\/.*)?$/
 var mongo = require("mongodb").MongoClient
-
+//document format: {code, url}
 
 app.set('port', (process.env.PORT || 5000))
 app.use(express.static(__dirname + '/public'))
@@ -36,12 +36,41 @@ app.get("/*", (req, res) => {
   //if the short code has an associated url, redirect user to url.
   //else, redirect to the frontpage if the site
   var codeStr = req.originalUrl.slice(1, req.originalUrl.length)
+  /*
   var redirectUrl = getRedirectUrl(codeStr)
   if (!redirectUrl) { //if redirectUrl is undefined (url hasnt been shortend yet)
     res.redirect(siteUrl)
     return
   }
   res.redirect(redirectUrl)
+  */
+  //see if the redirect code exists. if it does, redirect to the associated url
+  //if it does not, redirect to the frontpage
+  mongo.connect(mongo_uri, function (err, db) {
+    if (err) {
+      console.log("Error connecting to the database")
+      throw err
+    }
+    var collection = db.collection("urls")
+    collection.find({code: Number(codeStr)}).toArray(function(err, docs) {
+        if (err) throw err
+        if (docs.length == 1){
+          var url = docs[0].url
+          res.redirect(url)
+        }
+        else if (docs.length == 0){
+          console.log(codeStr + " not found in database, go to frontpage")
+          res.redirect(siteUrl)
+        }
+        else {
+          console.log("More than 2 docs for " + codeStr)
+          res.redirect(siteUrl)
+        }
+        db.close()
+    })
+
+  })
+
 })
 
 
@@ -62,7 +91,8 @@ function shortUrl(str) {
   return false
 }
 
-function getRedirectUrl(codeStr) {
+/*
+function getRedirectUrl(codeStr, res) {
   mongo.connect(mongo_uri, (err, db) => {
     if (err){
       console.log("Could not connect to database")
@@ -82,7 +112,7 @@ function getRedirectUrl(codeStr) {
     return undefined
   })
 }
-
+*/
 
 
 //website.com/1847
