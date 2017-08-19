@@ -9,11 +9,11 @@ app.set('port', (process.env.PORT || 5000))
 app.use(express.static(__dirname + '/public'))
 app.use(bodyParser.urlencoded({extended: false}));
 
-
+/*
 app.get("/api", (req, res) => {
   res.end()
 })
-
+*/
 app.post("/api", (req, res) =>{
   console.log(req.body.url_field)
   if (isValidURL){
