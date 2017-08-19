@@ -2,7 +2,6 @@ var siteUrl = "https://dry-plains-62025.herokuapp.com/"
 var express = require("express")
 var app = express()
 var bodyParser = require('body-parser')
-var mongo = require("mongodb")
 var mongo_uri = process.env.MONGODB_URI //ENV['MONGODB_URI']
 var urlRegex = /^(http:\/\/www\.|https:\/\/www\.|http:\/\/|https:\/\/)?[a-z0-9]+([\-\.]{1}[a-z0-9]+)*\.[a-z]{2,5}(:[0-9]{1,5})?(\/.*)?$/
 var mongo = require("mongodb").MongoClient
@@ -15,37 +14,32 @@ app.use(bodyParser.urlencoded({
 }));
 
 app.get("/api/*", (req, res) => {
+  //creates a short code from url and returns json
   //not using queries at the moment, so just get url from the pathname
+  //if wildcard is a valid url, create a shortcode and return json, or return
+  //existing json
   res.setHeader('Content-Type', 'application/json');
 
   var url = req.originalUrl.slice(5, req.originalUrl.length)
-  if (!IsValidUrl(url)) {
+  if (!IsValidUrl(url)) { //not valid
     res.jsonp({
       error: "Invalid format."
     })
     res.end()
     return
   }
-  res.jsonp({
-    original_url: url,
-    short_url: siteUrl + shortUrl(url)
-  })
+  shortenUrl(url, res)
 })
 
 app.get("/*", (req, res) => {
   //if the short code has an associated url, redirect user to url.
   //else, redirect to the frontpage if the site
   var codeStr = req.originalUrl.slice(1, req.originalUrl.length)
-  /*
-  var redirectUrl = getRedirectUrl(codeStr)
-  if (!redirectUrl) { //if redirectUrl is undefined (url hasnt been shortend yet)
+  if (isNaN(Number(codeStr))){
     res.redirect(siteUrl)
     return
   }
-  res.redirect(redirectUrl)
-  */
-  //see if the redirect code exists. if it does, redirect to the associated url
-  //if it does not, redirect to the frontpage
+
   mongo.connect(mongo_uri, function (err, db) {
     if (err) {
       console.log("Error connecting to the database")
@@ -68,9 +62,7 @@ app.get("/*", (req, res) => {
         }
         db.close()
     })
-
   })
-
 })
 
 
@@ -86,9 +78,28 @@ function IsValidUrl(str) {
   return false
 }
 
-function shortUrl(str) {
-  //checks if a short url exists
-  return false
+function shortenUrl(url, res) {
+  //send json response
+  //if url not found in database, make new code and add to database
+  //send repsonse
+  mongo.connect(mongo_uri, (err, db) => {
+    if (err){
+      console.log("Error connection to database")
+      throw err
+    }
+    var collection = db.collection("urls")
+    collection.find({url: url}).toArray((err, docs) => {
+      if (err) throw err
+
+    })
+  })
+}
+
+function makeCode(collection){
+  //returns a code to associate with url
+var code = collection.find({_id: "codeCount"}).toArray()[0].val
+collection.updateOne({_id: "codeCount"}, {$set: {val: code + 1 }})
+return code.toString()
 }
 
 /*
