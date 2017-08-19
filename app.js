@@ -6,6 +6,8 @@ var mongo_uri = process.env.MONGODB_URI //ENV['MONGODB_URI']
 var urlRegex = /^(http:\/\/www\.|https:\/\/www\.|http:\/\/|https:\/\/)?[a-z0-9]+([\-\.]{1}[a-z0-9]+)*\.[a-z]{2,5}(:[0-9]{1,5})?(\/.*)?$/
 var mongo = require("mongodb").MongoClient
 //document format: {code, url}
+var codeCount = 1000 //this assigns the url a code in the database, should get
+//desired value from database
 
 app.set('port', (process.env.PORT || 5000))
 app.use(express.static(__dirname + '/public'))
@@ -28,7 +30,10 @@ app.get("/api/*", (req, res) => {
     res.end()
     return
   }
-  shortenUrl(url, res)
+  mongo.connect(mongo_uri, (err, db) => {
+    //see if the code for the url exists
+  })
+
 })
 
 app.get("/*", (req, res) => {
@@ -65,6 +70,15 @@ app.get("/*", (req, res) => {
   })
 })
 
+//sets the codeCount to the next code
+//when a url is shortened, the count in the database will increase
+mongo.connect(mongo_uri, (err, db) => {
+  var collection = db.collction("url")
+  collection.find({_id:"codeCount"}).toArray((err, docs) => {
+    if (err) throw err
+    codeCount = docs[0].val
+    db.close()
+  })
 
 app.listen(app.get("port"), function() {
   console.log("Node app is running at http://localhost:" + app.get('port'))
@@ -111,19 +125,7 @@ function shortenUrl(url, res) {
   })
 }
 
-function makeCode(collection, url){
-  //returns a code to associate with url
-  console.log("\ncodeCount colelction:")
-  console.log(collection.find({"_id": "codeCount"}).toArray())
-var code = collection.find({"_id": "codeCount"}).toArray()[0].val
-collection.updateOne({_id: "codeCount"}, {$set: {val: code + 1 }})
-collection.insert({code: code + 1, url: url})
-console.log("new database entry:\n")
-console.log({code: code + 1, url: url})
-return code.toString()
-}
 
-/*
 function getRedirectUrl(codeStr, res) {
   mongo.connect(mongo_uri, (err, db) => {
     if (err){
