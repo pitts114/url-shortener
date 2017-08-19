@@ -65,6 +65,7 @@ app.get("/*", (req, res) => {
   //if the short code has an associated url, redirect user to url.
   //else, redirect to the frontpage if the site
   var codeStr = req.originalUrl.slice(1, req.originalUrl.length)
+  console.log(codeStr)
   if (isNaN(Number(codeStr))) {
     res.redirect(siteUrl)
     return
@@ -82,7 +83,9 @@ app.get("/*", (req, res) => {
       if (err) throw err
       if (docs.length == 1) {
         var url = docs[0].url
-        res.redirect(url)
+        console.log("redirecting to " + url)
+        res.redirect("http://" + url.replace("http://", '').replace("https://", ''))
+        res.end()
       } else if (docs.length == 0) {
         console.log(codeStr + " not found in database, go to frontpage")
         res.redirect(siteUrl)
