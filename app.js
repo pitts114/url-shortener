@@ -20,7 +20,7 @@ app.get("/api/*", (req, res) => {
   //not using queries at the moment, so just get url from the pathname
   //if wildcard is a valid url, create a shortcode and return json, or return
   //existing json
-  res.setHeader('Content-Type', 'application/json');
+  res.setHeader('Content-Type', 'application/json')
 
   var url = req.originalUrl.slice(5, req.originalUrl.length)
   if (!IsValidUrl(url)) { //not valid
@@ -32,6 +32,31 @@ app.get("/api/*", (req, res) => {
   }
   mongo.connect(mongo_uri, (err, db) => {
     //see if the code for the url exists
+    var collection = db.collection("urls")
+    collection.find({
+      url: url
+    }).toArray((err, docs) => {
+      if (err) throw err
+      if (docs.length == 0) { //if not found, make a new doc, change codeCount,
+        //then send response
+        collection.insert({code: codeCount++, url: url})
+        collection.update({_id: "codeCount"}, {$set: {val: codeCount}}, (err) => {
+          if (err) throw err
+          db.close()
+        })
+        res.jsonp({
+          original_url: url,
+          short_url: siteUrl + (codeCount - 1).toString()
+        })
+        res.end()
+      } else { //if found, send json
+        res.jsonp({
+          original_url: url,
+          short_url: siteUrl + docs[0].code.toString()
+        })
+        res.end()
+      }
+    })
   })
 
 })
@@ -40,32 +65,32 @@ app.get("/*", (req, res) => {
   //if the short code has an associated url, redirect user to url.
   //else, redirect to the frontpage if the site
   var codeStr = req.originalUrl.slice(1, req.originalUrl.length)
-  if (isNaN(Number(codeStr))){
+  if (isNaN(Number(codeStr))) {
     res.redirect(siteUrl)
     return
   }
 
-  mongo.connect(mongo_uri, function (err, db) {
+  mongo.connect(mongo_uri, function(err, db) {
     if (err) {
       console.log("Error connecting to the database")
       throw err
     }
     var collection = db.collection("urls")
-    collection.find({code: Number(codeStr)}).toArray(function(err, docs) {
-        if (err) throw err
-        if (docs.length == 1){
-          var url = docs[0].url
-          res.redirect(url)
-        }
-        else if (docs.length == 0){
-          console.log(codeStr + " not found in database, go to frontpage")
-          res.redirect(siteUrl)
-        }
-        else {
-          console.log("More than 2 docs for " + codeStr)
-          res.redirect(siteUrl)
-        }
-        db.close()
+    collection.find({
+      code: Number(codeStr)
+    }).toArray(function(err, docs) {
+      if (err) throw err
+      if (docs.length == 1) {
+        var url = docs[0].url
+        res.redirect(url)
+      } else if (docs.length == 0) {
+        console.log(codeStr + " not found in database, go to frontpage")
+        res.redirect(siteUrl)
+      } else {
+        console.log("More than 2 docs for " + codeStr)
+        res.redirect(siteUrl)
+      }
+      db.close()
     })
   })
 })
@@ -73,12 +98,16 @@ app.get("/*", (req, res) => {
 //sets the codeCount to the next code
 //when a url is shortened, the count in the database will increase
 mongo.connect(mongo_uri, (err, db) => {
-  var collection = db.collction("url")
-  collection.find({_id:"codeCount"}).toArray((err, docs) => {
+  if (err) throw err
+  var collection = db.collection("urls")
+  collection.find({
+    _id: "codeCount"
+  }).toArray((err, docs) => {
     if (err) throw err
     codeCount = docs[0].val
     db.close()
   })
+})
 
 app.listen(app.get("port"), function() {
   console.log("Node app is running at http://localhost:" + app.get('port'))
@@ -92,48 +121,17 @@ function IsValidUrl(str) {
   return false
 }
 
-function shortenUrl(url, res) {
-  //send json response
-  //if url not found in database, make new code and add to database
-  //send repsonse
-  mongo.connect(mongo_uri, (err, db) => {
-    if (err){
-      console.log("Error connection to database")
-      throw err
-    }
-    var collection = db.collection("urls")
-    collection.find({url: url}).toArray((err, docs) => {
-      if (err) throw err
-      console.log("docs found for " + url)
-      console.log(docs)
-      var code
-      if (docs.length == 0){ //not found
-        console.log("making new code for " + url)
-        code = makeCode(collection, url)
-      }
-      else {
-        code = docs[0].code.toString()
-      }
-
-      res.jsonp({
-        "original_url": url,
-        "short_url": siteUrl + code
-      })
-      res.end()
-      db.close()
-    })
-  })
-}
-
 
 function getRedirectUrl(codeStr, res) {
   mongo.connect(mongo_uri, (err, db) => {
-    if (err){
+    if (err) {
       console.log("Could not connect to database")
       throw err
     }
     var collection = db.collection("urls")
-    var result = collection.find({code: Number(codeStr)}, (err, results) =>{
+    var result = collection.find({
+      code: Number(codeStr)
+    }, (err, results) => {
       if (err) {
         console.log("error finding stuff")
         throw err
@@ -146,15 +144,3 @@ function getRedirectUrl(codeStr, res) {
     return undefined
   })
 }
-*/
-
-
-//website.com/1847
-//take the code str and see if its in the database or redirect to frontpage
-//
-
-
-
-
-
-//
