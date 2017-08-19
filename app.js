@@ -90,15 +90,36 @@ function shortenUrl(url, res) {
     var collection = db.collection("urls")
     collection.find({url: url}).toArray((err, docs) => {
       if (err) throw err
+      console.log("docs found for " + url)
+      console.log(docs)
+      var code
+      if (docs.length == 0){ //not found
+        console.log("making new code for " + url)
+        code = makeCode(collection, url)
+      }
+      else {
+        code = docs[0].code.toString()
+      }
 
+      res.jsonp({
+        "original_url": url,
+        "short_url": siteUrl + code
+      })
+      res.end()
+      db.close()
     })
   })
 }
 
-function makeCode(collection){
+function makeCode(collection, url){
   //returns a code to associate with url
-var code = collection.find({_id: "codeCount"}).toArray()[0].val
+  console.log("\ncodeCount colelction:")
+  console.log(collection.find({"_id": "codeCount"}).toArray())
+var code = collection.find({"_id": "codeCount"}).toArray()[0].val
 collection.updateOne({_id: "codeCount"}, {$set: {val: code + 1 }})
+collection.insert({code: code + 1, url: url})
+console.log("new database entry:\n")
+console.log({code: code + 1, url: url})
 return code.toString()
 }
 
