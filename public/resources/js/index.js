@@ -4,7 +4,7 @@ var apibtn = $("#api-btn");
 var botbar = $("#botbar");
 var HasBeenAnimated = false;
 var clip;
-
+searchbar.val('');
 searchbar.focus();
 
 btn.on("click", function() {

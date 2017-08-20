@@ -67,3 +67,6 @@ transform: translateY(0);
 #apilink, #botbar {
     visibility: hidden;
 }
+#copy-btn {
+  background-color: #DDDDDD;
+}
