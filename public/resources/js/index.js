@@ -54,6 +54,7 @@ function animate(){//begins button/bottom animation
     }
 }
 
+/*
 searchbar.focus( function() {
     botbar.removeClass("animated fadeInUp").css("visibility", "hidden");
 });
@@ -61,3 +62,4 @@ searchbar.focus( function() {
 searchbar.blur( function() {
    botbar.addClass("animated fadeInUp").css("visibility", "visible");
 });
+*/
