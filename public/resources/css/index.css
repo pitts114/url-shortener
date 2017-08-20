@@ -65,3 +65,7 @@ transform: translateY(0);
 }
 }
 
+#apilink, #botbar {
+    visibility: hidden;    
+}
+

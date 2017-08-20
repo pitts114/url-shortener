@@ -22,15 +22,16 @@ searchbar.on("keypress", function(e) {
 });
 
 function getUrl(){
-
+    //populates the form with the short url
+    
 }
 
 function animate(){//begins button/bottom animation
     if (!HasBeenAnimated){
         HasBeenAnimated = true;
         console.log("animating");
-        apibtn.addClass("animated fadeInDown").parent().toggle();
-        botbar.toggle().addClass("animated fadeInUp");
+        apibtn.addClass("animated fadeInDown").parent().css("visibility", "visible");
+        botbar.toggle().addClass("animated fadeInUp").css("visibility", "visible");
         
     }
 }
