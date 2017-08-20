@@ -44,9 +44,9 @@ function animate(){//begins button/bottom animation
 }
 
 searchbar.focus( function() {
-    $('.navbar-fixed-bottom').hide();
+    botbar.removeClass("animated fadeInUp").css("visibility", "hidden");
 });
 
 searchbar.blur( function() {
-    $('.navbar-fixed-bottom').show();
+   botbar.addClass("animated fadeInUp").css("visibility", "visible");
 });
