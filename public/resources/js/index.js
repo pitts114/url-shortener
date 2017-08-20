@@ -43,4 +43,10 @@ function animate(){//begins button/bottom animation
     }
 }
 
-$
+searchbar.focus( function() {
+    $('.navbar-fixed-bottom').hide();
+});
+
+searchbar.blur( function() {
+    $('.navbar-fixed-bottom').show();
+});
