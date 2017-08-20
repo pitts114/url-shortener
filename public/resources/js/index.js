@@ -3,6 +3,7 @@ var searchbar = $("#basic-url");
 var apibtn = $("#api-btn");
 var botbar = $("#botbar");
 var HasBeenAnimated = false;
+searchbar.html('');
 
 btn.on("click", function(){
     console.log(btn.html());
@@ -42,6 +43,7 @@ function animate(){//begins button/bottom animation
     }
 }
 
+$
 
 //top button  animated fadeInDown
 //bottom icons:  animated fadeInUp
