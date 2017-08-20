@@ -23,6 +23,12 @@ searchbar.on("keypress", function(e) {
 
 function getUrl(){
     //populates the form with the short url
+    var url = searchbar.val();
+    console.log("url is " + url);
+    jQuery.getJSON("api/" + url, function(data) {
+        searchbar.val(data.short_url);
+        btn.html("Shorten!");
+    });
     
 }
 
