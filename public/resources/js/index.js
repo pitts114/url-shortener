@@ -3,6 +3,7 @@ var searchbar = $("#basic-url");
 var apibtn = $("#api-btn");
 var botbar = $("#botbar");
 var HasBeenAnimated = false;
+var clip;
 
 searchbar.focus();
 
@@ -79,9 +80,9 @@ var buttonVisible = false;
 
 function showCopyButton() {
   if (!buttonVisible) {
-    $("#basic-url").after('<span class="input-group-btn " data-clipboard-target="#basic-url"><button id="copy-btn" class="btn" type="button"><i class="fa fa-clipboard" aria-hidden="true"></i></button></span>');
+    $("#basic-url").after('<span class="input-group-btn "><button id="copy-btn" class="btn" type="button" data-clipboard-target="#basic-url"><i class="fa fa-clipboard" aria-hidden="true"></i></button></span>');
     buttonVisible = true;
-    new Clipboard("#copy-btn");
+    clip = new Clipboard("#copy-btn");
   }
 }
 
