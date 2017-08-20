@@ -37,6 +37,7 @@ function getUrl() {
   $.getJSON("api/" + url, function(data) {
     searchbar.val(data.short_url);
     btn.html("Shorten!");
+    searchbar.select();
   });
   /*
   $.ajax({
