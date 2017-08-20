@@ -15,7 +15,10 @@ searchbar.on("keypress", function(e) {
         
     }
 });
-//TODO make a json request and update the field with the short url
+
+function getUrl(){
+    
+}
 
 
 /*
