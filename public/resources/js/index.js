@@ -26,6 +26,7 @@ searchbar.on("keypress", function(e) {
 
 function getUrl(){
     //populates the form with the short url
+    searchbar.blur();
     var url = searchbar.val();
     console.log("url is " + url);
     $.getJSON("api/" + url, function(data) {
