@@ -22,7 +22,7 @@ h1 {
 }
 .navbar-fixed-top{
     background-color: #9E9E9E;
-    margin-top:1em; 
+    margin-top:1em;
     animation-delay: 1s;
 }
 
@@ -32,11 +32,10 @@ h1 {
 }
 #icons > a > .fa {
     color:#757575;
-    margin-top: 
+    margin-top:
 }
 
 .btn, .btn:focus,.btn:active {
-    outline: none !important;
     box-shadow: 4px 4px 4px grey;
 }
 .input-group {
@@ -66,6 +65,5 @@ transform: translateY(0);
 }
 
 #apilink, #botbar {
-    visibility: hidden;    
+    visibility: hidden;
 }
-

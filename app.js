@@ -24,6 +24,12 @@ app.get("/api/*", (req, res) => {
 console.log(req.url)
 
   var url = req.originalUrl.slice(5, req.originalUrl.length)
+  if (url.indexOf(siteUrl) != -1){
+    console.log("hey thats my site!")
+    res.jsonp({original_url: url, short_url: url})
+    res.end()
+    return
+  }
   if (!IsValidUrl(url)) { //not valid
     res.jsonp({
       error: "Invalid format."
