@@ -19,6 +19,7 @@
   "homepage": "https://github.com/pullman14/url-shortener#readme",
   "dependencies": {
     "body-parser": "^1.17.2",
+    "clipboard": "^1.7.1",
     "express": "^4.15.4",
     "mongodb": "^2.2.31"
   }
