@@ -5,6 +5,8 @@ var botbar = $("#botbar");
 var HasBeenAnimated = false;
 searchbar.val('');
 
+searchbar.focus();
+
 btn.on("click", function(){
     console.log(btn.html());
     btn.html('<i class="fa fa-spinner fa-spin" aria-hidden="true"></i>');
@@ -50,11 +52,12 @@ function animate(){//begins button/bottom animation
         console.log("animating");
         apibtn.addClass("animated fadeInDown").parent().css("visibility", "visible");
         botbar.toggle().addClass("animated fadeInUp").css("visibility", "visible");
-        
+
     }
 }
 
-/*
+if( /Android|webOS|iPhone|iPad|iPod|BlackBerry/i.test(navigator.userAgent) ) {
+    // when on mobile, hide the footer when typing
 searchbar.focus( function() {
     botbar.removeClass("animated fadeInUp").css("visibility", "hidden");
 });
@@ -62,4 +65,4 @@ searchbar.focus( function() {
 searchbar.blur( function() {
    botbar.addClass("animated fadeInUp").css("visibility", "visible");
 });
-*/
+}

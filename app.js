@@ -120,7 +120,7 @@ app.listen(app.get("port"), function() {
 
 
 function IsValidUrl(str) {
-  if (str.match(urlRegex))
+  if (str.toLowerCase().match(urlRegex))
     return true
   return false
 }
