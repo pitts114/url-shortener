@@ -5,20 +5,22 @@
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
     <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css?family=Open+Sans" rel="stylesheet"> 
+    <link rel="stylesheet"
+  href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.5.2/animate.min.css">
     <link rel="stylesheet" href="resources/css/index.css">
     <meta name="theme-color" content="#616161" />
     <title>URL Shortener</title>
 </head>
 
 <body>
-    <nav class="navbar-default navbar-fixed-top">
-        <div class="container">
-            <div class="col-xs-1 col-xs-offset-10">
-                <p><a href="api/index.html">API</a></p>
+    <div class="container">
+        <div class="row top-row">
+            <div class="col-xs-offset-8 col-xs-4 text-center">
+                <a href="api/index.html"><btn id="api-btn" class="btn">API</btn></a>
             </div>
         </div>
-    </nav>
-    <div class="container">
+    </div>
+    <div class="container animated fadeInUp">
         <div class="row text-center top">
             <div id ="searchRow" class="col-xs-12">
                 <h1 class="text-">URL Shortener</h1>
@@ -34,8 +36,11 @@
     <br>
     <footer class="navbar-default navbar-fixed-bottom">
         <div class="container">
-            <div class="col-xs-offset-4 col-xs-4 text-center">
-                <p><a href="https://github.com/pullman14/url-shortener"><i class="fa fa-github-square" aria-hidden="true"></i></a></p>
+            <div class=" col-xs-12 text-center">
+                <p id="icons">
+                    <a href="https://github.com/pullman14/url-shortener"><i class="fa fa-github" aria-hidden="true"></i></a>
+                    <a href=""><i class="fa fa-linkedin" aria-hidden="true"></i></a>
+                </p>
             </div>
         </div>
     </footer>
