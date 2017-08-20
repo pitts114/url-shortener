@@ -1,8 +1,55 @@
-.vertical-center {
-  min-height: 100%;  /* Fallback for browsers do NOT support vh unit */
-  min-height: 100vh; /* These two lines are counted as one :-)       */
-
-  display: flex;
-  align-items: center;
+body {
+    background-color: #9E9E9E;
+    font-family: 'Open Sans', sans-serif;
 }
+
+h1 {
+    color: white;
+}
+
+.top {
+    margin-top: 9em;;
+}
+.top-row {
+    margin-top: 1.5em;
+}
+
+.navbar-fixed-bottom{
+    background-color: #FFFFFF;
+    font-size: 3em;
+    box-shadow: 0px -3px 5px grey;
+    animation-delay: 2s;
+}
+.navbar-fixed-top{
+    background-color: #9E9E9E;
+    margin-top:1em; 
+    animation-delay: 2s;
+}
+
+#shorten-btn, #shorten-btn:hover {
+    background-color: #009688;
+    color: #FFFFFF;
+}
+#icons > a > .fa {
+    color:#757575;
+    margin-top: 
+}
+
+.btn, .btn:focus,.btn:active {
+    outline: none !important;
+    box-shadow: 4px 4px 4px grey;
+}
+.input-group {
+    box-shadow: 5px 5px 5px grey;
+}
+
+a {
+    color: #FFFFFF;
+}
+#api-btn {
+    background-color: #FFFFFF;
+    color:#757575;
+    animation-delay: 2s;
+}
+
 

@@ -4,24 +4,46 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
     <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans" rel="stylesheet"> 
+    <link rel="stylesheet"
+  href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.5.2/animate.min.css">
     <link rel="stylesheet" href="resources/css/index.css">
+    <meta name="theme-color" content="#616161" />
     <title>URL Shortener</title>
 </head>
 
 <body>
     <div class="container">
-        <div class="row text-center vertical-center">
-            <div id ="searchRow" class="col-xs-12">
+        <div class="row top-row">
+            <div class="col-xs-offset-8 col-xs-4 text-center">
+                <a href="api/index.html"><btn id="api-btn" class="btn animated fadeInDown">API</btn></a>
+            </div>
+        </div>
+    </div>
+    <div class="container animated fadeInUp">
+        <div class="row text-center top">
+            <div id ="searchRow" class="col-xs-12 col-sm-offset-1 col-sm-10 col-md-8 col-md-offset-2">
                 <h1 class="text-">URL Shortener</h1>
                 <div class="input-group">
                     <input type="text" class="form-control" id="basic-url" aria-describedby="basic-addon3" placeholder="https://www.google.com">
                     <span class="input-group-btn">
-                        <button id="short-btn" class="btn btn-default btn-primary" type="button">Shorten!</button>
+                        <button id="shorten-btn" class="btn" type="button">Shorten!</button>
                     </span>
                 </div>
             </div>
         </div>
     </div>
+    <br>
+    <footer class="navbar-default navbar-fixed-bottom animated fadeInUp">
+        <div class="container">
+            <div class=" col-xs-12 text-center">
+                <p id="icons">
+                    <a href="https://github.com/pullman14"><i class="fa fa-github" aria-hidden="true"></i></a>
+                    <a href="https://www.linkedin.com/in/pitts114/"><i class="fa fa-linkedin" aria-hidden="true"></i></a>
+                </p>
+            </div>
+        </div>
+    </footer>
 </body>
 
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
