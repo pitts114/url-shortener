@@ -21,6 +21,7 @@ app.get("/api/*", (req, res) => {
   //if wildcard is a valid url, create a shortcode and return json, or return
   //existing json
   res.setHeader('Content-Type', 'application/json')
+console.log(req.url)
 
   var url = req.originalUrl.slice(5, req.originalUrl.length)
   if (!IsValidUrl(url)) { //not valid

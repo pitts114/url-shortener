@@ -26,11 +26,22 @@ function getUrl(){
     //populates the form with the short url
     var url = searchbar.val();
     console.log("url is " + url);
-    jQuery.getJSON("api/" + url, function(data) {
+    $.getJSON("api/" + url, function(data) {
         searchbar.val(data.short_url);
         btn.html("Shorten!");
     });
-    
+    /*
+    $.ajax({
+        url: "/api/" + url,
+        type: "GET",
+        contentType: "application/json",
+        dataType: "json",
+        success: function (data) {
+            searchbar.val(data.short_url);
+            btn.html("Shorten!");
+        }
+    });
+    */
 }
 
 function animate(){//begins button/bottom animation
