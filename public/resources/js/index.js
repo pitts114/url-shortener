@@ -37,6 +37,7 @@ function getUrl() {
   $.getJSON("api/" + url, function(data) {
     searchbar.val(data.short_url);
     btn.html("Shorten!");
+    showCopyButton();
     searchbar.select();
   });
   /*
@@ -72,4 +73,21 @@ if (/Android|webOS|iPhone|iPad|iPod|BlackBerry/i.test(navigator.userAgent)) {
   searchbar.blur(function() {
     botbar.addClass("animated fadeInUp").css("visibility", "visible");
   });
+}
+
+var buttonVisible = false;
+
+function showCopyButton() {
+  if (!buttonVisible) {
+    $("#basic-url").after('<span class="input-group-btn " data-clipboard-target="#basic-url"><button id="copy-btn" class="btn" type="button"><i class="fa fa-clipboard" aria-hidden="true"></i></button></span>');
+    buttonVisible = true;
+    new Clipboard("#copy-btn");
+  }
+}
+
+function hideCopyButton() {
+  if (buttonVisible) {
+    $("#copy-btn").remove();
+    buttonVisible = false;
+  }
 }
