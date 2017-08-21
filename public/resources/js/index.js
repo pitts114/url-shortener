@@ -39,7 +39,7 @@ function getUrl() {
     searchbar.val(data.short_url);
     btn.html("Shorten!");
     showCopyButton();
-    searchbar.select();
+    //searchbar.select();
   });
   /*
   $.ajax({
